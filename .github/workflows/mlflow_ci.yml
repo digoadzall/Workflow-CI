@@ -1,0 +1,33 @@
+name: Train ML Model with MLflow
+
+on:
+  push:
+    paths:
+      - 'MLProject/**'
+      - '.github/workflows/**'
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || true
+          pip install mlflow pandas scikit-learn
+
+      - name: Run MLflow Project
+        run: |
+          cd MLProject
+          mlflow run . -P alpha=0.5
+
+      - name: Upload artifact to Google Drive
+        run: echo "Simulasi upload ke Google Drive"
