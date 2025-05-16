@@ -1,14 +1,15 @@
 import argparse
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
 
-# parsing argumen data_path
+# Parsing argument
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_path', type=str, default='clean_telco.csv')
+parser.add_argument('--alpha', type=float, default=0.5)  
 args = parser.parse_args()
 
 # Load dataset
@@ -26,7 +27,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 mlflow.sklearn.autolog()
 
 with mlflow.start_run():
-    model = RandomForestClassifier()
+    # Logistic Regression dengan regularisasi L2 (default)
+    # alpha → regularization strength → C = 1 / alpha
+    model = LogisticRegression(C=1.0 / args.alpha, solver='liblinear')
     model.fit(X_train, y_train)
     preds = model.predict(X_test)
     acc = accuracy_score(y_test, preds)
