@@ -8,4 +8,5 @@ entry_points:
       data_path: {type: str, default: "clean_telco.csv"}
       alpha: {type: float, default: 0.5}
     command: >
-      python modelling.py --data_path {data_path} --alpha {alpha}
+      python modelling.py --data_path {data_path} --alpha {alpha} # trigger utk run
+
