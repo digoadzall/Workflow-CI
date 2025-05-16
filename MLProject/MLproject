@@ -6,5 +6,6 @@ entry_points:
   main:
     parameters:
       data_path: {type: str, default: "clean_telco.csv"}
+      alpha: {type: float, default: 0.5}
     command: >
-      python modelling.py --data_path {data_path}
+      python modelling.py --data_path {data_path} --alpha {alpha}
