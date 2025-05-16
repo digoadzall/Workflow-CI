@@ -29,4 +29,4 @@ jobs:
           mlflow run . -P alpha=0.5
 
       - name: Upload artifact to Google Drive
-        run: echo "Simulasi upload ke Google Drive"
+        run: echo "Simulasi upload ke Google Drive" # trigger workflow lagi
