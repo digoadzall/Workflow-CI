@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Install Miniconda
@@ -20,13 +20,16 @@ jobs:
           auto-update-conda: true
           python-version: 3.9
           environment-file: MLProject/conda.yaml
-          activate-environment: mlflow-env  # Sesuaikan dengan nama env di conda.yaml
+          activate-environment: mlflow-env
 
       - name: Run MLflow Project
-        shell: bash -l {0}  # penting! agar conda env dikenali
+        shell: bash -l {0}
         run: |
           cd MLProject
           mlflow run . -P alpha=0.5
 
-      - name: Upload artifact to Google Drive
-        run: echo "Simulasi upload ke Google Drive" # trigger workflow lagi
+      - name: Upload MLflow model artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: mlflow-model
+          path: MLruns/**/artifacts/model/
